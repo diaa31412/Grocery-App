@@ -1,6 +1,9 @@
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+import 'package:frontend/core/utils/sizeConfig.dart';
+import 'package:frontend/features/onBoarding/presentation/onBoarding.dart';
+import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 
 class Splashbody extends StatefulWidget {
@@ -34,10 +37,19 @@ class _SplashbodyState extends State<Splashbody>
       });
     });
     animationController?.forward();
+    goToNextView();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    animationController?.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return Container(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -65,5 +77,11 @@ class _SplashbodyState extends State<Splashbody>
         ],
       ),
     );
+  }
+
+  void goToNextView() {
+    Future.delayed(Duration(seconds: 3), () {
+      Get.to(() => OnBoarding(), transition: Transition.fade);
+    });
   }
 }
